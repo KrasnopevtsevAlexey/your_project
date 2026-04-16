@@ -1,9 +1,11 @@
 FROM php:8.3-apache
 
-# Устанавливаем SQLite3 и расширение PDO SQLite
+# Устанавливаем SQLite3, Git и расширение PDO SQLite
 RUN apt-get update && apt-get install -y \
     sqlite3 \
     libsqlite3-dev \
+    git \
+    unzip \
     && docker-php-ext-install pdo_sqlite \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
