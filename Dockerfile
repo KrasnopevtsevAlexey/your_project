@@ -9,16 +9,13 @@ RUN a2enmod rewrite
 # Устанавливаем Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Устанавливаем рабочую директорию
 WORKDIR /var/www/html
 
-# Копируем composer файлы
+# Копируем composer файлы и устанавливаем зависимости
 COPY composer.json composer.lock ./
-
-# Устанавливаем зависимости
 RUN composer install --no-dev --optimize-autoloader
 
-# Копируем все файлы проекта
+# Копируем все файлы
 COPY . .
 
 # Создаем папку для данных
@@ -29,7 +26,7 @@ RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html \
     && chmod -R 777 /var/www/html/public
 
-# Настраиваем DocumentRoot на public
+# Настраиваем DocumentRoot на public (этот метод проще)
 RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available/000-default.conf
 
 # Настройка PHP для логов
