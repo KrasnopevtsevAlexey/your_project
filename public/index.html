@@ -6,7 +6,7 @@
     <title>Мои проекты</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -29,6 +29,7 @@
             display: flex;
             gap: 20px;
             justify-content: center;
+            flex-wrap: wrap;
         }
         .project-card {
             background: #f7f7f7;
@@ -37,6 +38,8 @@
             text-decoration: none;
             color: #333;
             transition: transform 0.3s;
+            display: inline-block;
+            min-width: 200px;
         }
         .project-card:hover {
             transform: translateY(-5px);
@@ -54,9 +57,9 @@
 </head>
 <body>
     <div class="container">
-        <h1>🚀 Мои проекты на Render</h1>
+        <h1>🚀 Мои проекты</h1>
         <div class="projects">
-            <a href="/" class="project-card">
+            <a href="/register.php" class="project-card">
                 <h2>📝 Регистрация</h2>
                 <p>Slim Framework + Email</p>
             </a>
