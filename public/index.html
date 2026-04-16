@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+    <style>
+        body { font-family: Arial; padding: 20px; background: #f5f5f5; }
+        .form-container { max-width: 400px; margin: 0 auto; padding: 20px; background: white; border-radius: 5px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        input, select { width: 100%; padding: 8px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
+        button { width: 100%; padding: 10px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
+        button:hover { background: #0056b3; }
+        .result { margin-top: 20px; padding: 10px; border-radius: 4px; }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        pre { background: #f4f4f4; padding: 10px; overflow-x: auto; font-size: 12px; }
+        h2 { margin-top: 0; color: #333; }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>📝 Регистрация пользователя</h2>
+        <form id="registerForm">
+            <input type="text" id="username" placeholder="👤 Имя пользователя" required>
+            <input type="email" id="email" placeholder="📧 Email" required>
+            <input type="password" id="password" placeholder="🔒 Пароль" required>
+            <select id="mode">
+                <option value="test">🟢 Тестовый режим (письма не отправляются)</option>
+                <option value="real">🔴 Реальный режим (отправка писем)</option>
+            </select>
+            <button type="submit">✅ Зарегистрироваться</button>
+        </form>
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        const form = document.getElementById('registerForm');
+        const resultDiv = document.getElementById('result');
+        
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const mode = document.getElementById('mode').value;
+            
+            resultDiv.innerHTML = '⏳ Отправка данных...';
+            resultDiv.className = 'result';
+            
+            try {
+                const response = await fetch('/api/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, email, password, mode })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    resultDiv.className = 'result success';
+                    resultDiv.innerHTML = `
+                        ✅ ${data.message}<br>
+                        📧 Email: ${data.email}<br>
+                        🆔 ID: ${data.user_id}<br>
+                        🔧 Режим: ${data.mode_message}
+                    `;
+                    
+                    if (data.test_logs && data.test_logs.length > 0) {
+                        resultDiv.innerHTML += '<br><br><strong>📋 Лог тестового письма:</strong><pre>' + 
+                            JSON.stringify(data.test_logs, null, 2) + '</pre>';
+                    }
+                    
+                    form.reset();
+                } else {
+                    resultDiv.className = 'result error';
+                    resultDiv.innerHTML = `❌ ${data.message}`;
+                }
+            } catch (error) {
+                resultDiv.className = 'result error';
+                resultDiv.innerHTML = `❌ Ошибка: ${error.message}`;
+                console.error('Ошибка:', error);
+            }
+        });
+    </script>
+</body>
+</html>

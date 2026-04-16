@@ -1,0 +1,34 @@
+<h1>Add New Car</h1>
+
+<!-- Вывод ошибок -->
+<?php if (!empty($errors)): ?>
+    <div class="alert alert-danger">
+        <ul>
+            <?php foreach ($errors as $error): ?>
+                <li><?= htmlspecialchars($error) ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>
+
+<!-- Форма -->
+<form action="/cars" method="POST">
+    <div>
+        <label>Make:</label>
+        <input type="text" name="car[make]" value="<?= htmlspecialchars($car['make'] ?? '') ?>">
+        <?php if (isset($errors['make'])): ?>
+            <span style="color: red;"><?= htmlspecialchars($errors['make']) ?></span>
+        <?php endif; ?>
+    </div>
+    
+    <div>
+        <label>Model:</label>
+        <input type="text" name="car[model]" value="<?= htmlspecialchars($car['model'] ?? '') ?>">
+        <?php if (isset($errors['model'])): ?>
+            <span style="color: red;"><?= htmlspecialchars($errors['model']) ?></span>
+        <?php endif; ?>
+    </div>
+    
+    <button type="submit">Save</button>
+    <a href="/cars">Cancel</a>
+</form>

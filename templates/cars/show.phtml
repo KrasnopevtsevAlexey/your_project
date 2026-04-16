@@ -1,0 +1,15 @@
+<h1>Car Details</h1>
+
+<?php if (isset($flash['success'][0])): ?>
+    <div style="background-color: #d4edda; color: #155724; padding: 10px; margin-bottom: 20px;">
+        <?= htmlspecialchars($flash['success'][0]) ?>
+    </div>
+<?php endif; ?>
+
+<div style="border: 1px solid #ddd; padding: 20px; margin: 20px 0;">
+    <p><strong>ID:</strong> <?= htmlspecialchars($car->getId()) ?></p>
+    <p><strong>Make:</strong> <?= htmlspecialchars($car->getMake()) ?></p>
+    <p><strong>Model:</strong> <?= htmlspecialchars($car->getModel()) ?></p>
+</div>
+
+<a href="/cars">Back to List</a>

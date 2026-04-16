@@ -1,0 +1,33 @@
+<h1>Cars List</h1>
+
+<?php if(isset($flash['success'][0])): ?>
+    <p><?= htmlspecialchars($flash['success'][0]) ?></p>
+    <?php endif; ?>
+
+    <table border="1">
+
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Make</th>
+            <th>Model</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+      <?php foreach ($cars as $car): ?>
+            <tr>
+                <td><?= htmlspecialchars($car->getId()) ?></td>
+                <td><?= htmlspecialchars($car->getMake()) ?></td>
+                <td><?= htmlspecialchars($car->getModel()) ?></td>
+                <td>
+                    <a href="/cars/<?= $car->getId() ?>">View</a>
+                    <form action="/cars/<?= $car->getId() ?>/delete" method="POST" style="display: inline;">
+                        <button type="submit" onclick="return confirm('Are you sure?')">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        <?php endforeach; ?>   
+    </tbody>
+    </table>
+    <a href="/cars/new">Add New Car</a>
