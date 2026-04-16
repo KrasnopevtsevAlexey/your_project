@@ -2,11 +2,12 @@ services:
   - type: web
     name: car-project
     runtime: image
-    repo: https://github.com/YOUR_USERNAME/your-project
+    repo: https://github.com/KrasnopevtsevAlexey/your_project
     plan: free
     dockerfilePath: ./Dockerfile
     envVars:
       - key: PORT
         value: 8000
       - key: DB_PATH
-        value: /data/database.sqlite
+        value: /data/cars.db
+    healthCheckPath: /healthcheck.php

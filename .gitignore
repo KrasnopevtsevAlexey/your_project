@@ -1,30 +1,9 @@
-# Композитор зависимости
 /vendor/
 composer.lock
-
-# Базы данных (не пушим на GitHub)
 *.db
 *.sqlite
-*.sqlite3
-
-# Логи
 *.log
-error_log
-
-# IDE и системные файлы
+.env
 .DS_Store
-Thumbs.db
 .idea/
 .vscode/
-
-# Временные файлы
-*.tmp
-*.cache
-
-# Файлы окружения
-.env
-.env.local
-.env.*.local
-
-# OS файлы
-.ftpquota
